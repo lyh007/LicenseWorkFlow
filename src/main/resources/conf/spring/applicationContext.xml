@@ -19,24 +19,25 @@
         <property name="username" value="${jdbc.username}"/>
         <property name="password" value="${jdbc.password}"/>
     </bean>
-    <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
-
-    <bean id="springHelper" class="org.jbpm.pvm.internal.processengine.SpringHelper" />
-    <bean id="processEngine" factory-bean="springHelper" factory-method="createProcessEngine" />
-
+    <!--Hibernate会话工厂,JBPM4持久化必备-->
     <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
-        <property name="configLocation" value="classpath:jbpm.hibernate.cfg.xml"/>
+        <property name="configLocation" value="classpath:/conf/jbpm/jbpm.hibernate.cfg.xml"/>
         <property name="dataSource" ref="dataSource"/>
     </bean>
+    <!--将JBPM配置导入Spring控制-->
+    <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"></bean>
+
+    <bean id="springHelper" class="org.jbpm.pvm.internal.processengine.SpringHelper">
+        <property name="jbpmCfg">
+            <value>conf/jbpm/jbpm.cfg.xml</value>
+        </property>
+    </bean>
+    <bean id="processEngine" factory-bean="springHelper" factory-method="createProcessEngine"/>
+    <!-- Spring的事务管理器 -->
     <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
-
-    <aop:config>
-        <aop:pointcut id="servicesPointcut"
-                      expression="execution(* com.lyh.licenseworkflow.*.*(..))"/>
-        <aop:advisor advice-ref="txAdvice" pointcut-ref="servicesPointcut"/>
-    </aop:config>
+    <!-- 指定事务策略-->
     <tx:advice id="txAdvice" transaction-manager="transactionManager">
         <tx:attributes>
             <tx:method name="add*" propagation="REQUIRED"/>
@@ -48,6 +49,12 @@
             <tx:method name="get*" propagation="REQUIRED" read-only="true"/>
         </tx:attributes>
     </tx:advice>
+    <!-- 指定事务的切入点 -->
+    <aop:config>
+        <aop:pointcut id="servicesPointcut"
+                      expression="execution(* com.lyh.licenseworkflow.*.*(..))"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="servicesPointcut"/>
+    </aop:config>
     <!-- 使用annotation 自动注册bean -->
     <context:component-scan base-package="com.lyh.licenseworkflow.*"/>
     <context:annotation-config/>
