@@ -1,57 +1,61 @@
 <?xml version="1.0"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping package="com.lyh.licenseworkflow.po" default-access="field">
 
-  <!-- ### USER ########################################################### -->
-  <class name="UserEntity" table="JBPM4_CUSTOMIZE_USER">
-    <id name="dbid" column="DBID_">
-      <generator class="assigned" />
-    </id>
-    <version name="dbversion" column="DBVERSION_" />
-    
-    <property name="id" column="ID_" />
-    <property name="password" column="PASSWORD_" />
-  </class>
-  
-  <!-- ### MEMBERSHIP ##################################################### -->
-  <class name="GroupMemberEntity" table="JBPM4_CUSTOMIZE_MEMBERSHIP">
-    <id name="dbid" column="DBID_">
-      <generator class="assigned" />
-    </id>
-    <version name="dbversion" column="DBVERSION_" />
-    
-    <many-to-one name="user"
-                 column="USER_" 
-                 class="UserEntity"
-                 foreign-key="FK_MEM_USER"
-                 index="IDX_MEM_USER"/>
+    <!-- ### USER ########################################################### -->
+    <class name="UserEntity" table="JBPM4_CUSTOMIZE_USER">
+        <id name="dbid" column="DBID_">
+            <generator class="assigned"/>
+        </id>
+        <version name="dbversion" column="DBVERSION_"/>
 
-    <many-to-one name="group"
-                 column="GROUP_" 
-                 class="GroupEntity"
-                 foreign-key="FK_MEM_GROUP"
-                 index="IDX_MEM_GROUP"/>
+        <property name="id" column="ID_"/>
+        <property name="password" column="PASSWORD_"/>
+        <property name="name" column="USERNAME_"/>
+        <property name="mail" column="USERMAIL_"/>
+    </class>
 
-    <property name="role" column="NAME_" />
-  </class>
-  
-  <!-- ### GROUP ########################################################### -->
-  <class name="GroupEntity" table="JBPM4_CUSTOMIZE_GROUP">
-    <id name="dbid" column="DBID_">
-      <generator class="assigned" />
-    </id>
-    <version name="dbversion" column="DBVERSION_" />
-    
-    <property name="id" column="ID_" />
-    <property name="name" column="NAME_" />
-    <property name="type" column="TYPE_" />
+    <!-- ### MEMBERSHIP ##################################################### -->
+    <class name="GroupMemberEntity" table="JBPM4_CUSTOMIZE_MEMBERSHIP">
+        <id name="dbid" column="DBID_">
+            <generator class="assigned"/>
+        </id>
+        <version name="dbversion" column="DBVERSION_"/>
 
-    <many-to-one name="parent"
-                 column="PARENT_" 
-                 class="GroupEntity"
-                 foreign-key="FK_GROUP_PARENT"
-                 index="IDX_GROUP_PARENT"/>
-  </class>
-  
+        <many-to-one name="user"
+                     column="USER_"
+                     class="UserEntity"
+                     foreign-key="FK_MEM_USER"
+                     index="IDX_MEM_USER"/>
+
+        <many-to-one name="group"
+                     column="GROUP_"
+                     class="GroupEntity"
+                     foreign-key="FK_MEM_GROUP"
+                     index="IDX_MEM_GROUP"/>
+
+        <property name="role" column="NAME_"/>
+    </class>
+
+    <!-- ### GROUP ########################################################### -->
+    <class name="GroupEntity" table="JBPM4_CUSTOMIZE_GROUP">
+        <id name="dbid" column="DBID_">
+            <generator class="assigned"/>
+        </id>
+        <version name="dbversion" column="DBVERSION_"/>
+
+        <property name="id" column="ID_"/>
+        <property name="name" column="NAME_"/>
+        <property name="type" column="TYPE_"/>
+        <property name="description" column="DESCRIPTION"/>
+
+        <many-to-one name="parent"
+                     column="PARENT_"
+                     class="GroupEntity"
+                     foreign-key="FK_GROUP_PARENT"
+                     index="IDX_GROUP_PARENT"/>
+    </class>
+
 </hibernate-mapping>

@@ -1,5 +1,6 @@
 package com.lyh.licenseworkflow.web.base;
 
+import com.lyh.licenseworkflow.service.LicenseWorkFlowIdentityService;
 import com.lyh.licenseworkflow.system.util.LogUtil;
 import org.apache.log4j.Logger;
 import org.jbpm.api.*;
@@ -51,7 +52,6 @@ public class ServerBeanFactory {
         // 技术支持
         identityService.createUser("wyy", "语嫣", "王");
         identityService.createMembership("wyy", "instructor");
-
         // 销售人员
         identityService.createUser("mrf", "复", "慕容");
         identityService.createMembership("mrf", "vendition");

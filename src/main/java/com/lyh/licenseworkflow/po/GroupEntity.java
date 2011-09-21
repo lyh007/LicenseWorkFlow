@@ -14,7 +14,7 @@ public class GroupEntity implements Serializable, Group {
     private String name;//组织名称
     private String type;//组织类型
     private GroupEntity parent;//父组织
-    private String remarks;//备注
+    private String description;//描述
     protected long dbid;
     protected int dbversion;
 
@@ -50,12 +50,12 @@ public class GroupEntity implements Serializable, Group {
         this.parent = parent;
     }
 
-    public String getRemarks() {
-        return remarks;
+    public String getDescription() {
+        return description;
     }
 
-    public void setRemarks(String remarks) {
-        this.remarks = remarks;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public long getDbid() {

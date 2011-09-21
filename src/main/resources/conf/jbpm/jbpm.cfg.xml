@@ -10,7 +10,7 @@
   <!--<import resource="jbpm.identity.cfg.xml" />-->
 
     <transaction-context>
-     <object class="com.lyh.licenseworkflow.dao.impl.LicenseWorkFlowIdentitySessionImpl"/>
+     <object class="com.lyh.licenseworkflow.service.impl.LicenseWorkFlowIdentitySessionImpl"/>
   </transaction-context>
 
   <!-- Job executor is excluded for running the example test cases. -->

@@ -12,24 +12,19 @@ import java.io.Serializable;
 public class UserEntity implements Serializable, User {
     private String id;
     private String userNo;// 员工工号
-    private String userName;// 员工姓名
-    private String givenName;
-    private String userSex;// 性别
+    private String name;// 员工姓名
     private String password;// 密码
-    private String userType;// 类型
-    private String userMail;// 电子邮件
-    private String isValid;// 是否有效Y/N
-    private String remarks;// 备注
+    private String mail;// 电子邮件
     protected long dbid; // 数据库内部自生成的ID
     protected int dbversion;
 
     public UserEntity() {
     }
 
-    public UserEntity(String id, String userName, String userMail) {
+    public UserEntity(String id, String name, String mail) {
         this.id = id;
-        this.userName = userName;
-        this.userMail = userMail;
+        this.name = name;
+        this.mail = mail;
     }
 
     public String getId() {
@@ -48,20 +43,12 @@ public class UserEntity implements Serializable, User {
         this.userNo = userNo;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getName() {
+        return name;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getUserSex() {
-        return userSex;
-    }
-
-    public void setUserSex(String userSex) {
-        this.userSex = userSex;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getPassword() {
@@ -72,36 +59,12 @@ public class UserEntity implements Serializable, User {
         this.password = password;
     }
 
-    public String getUserType() {
-        return userType;
+    public String getMail() {
+        return mail;
     }
 
-    public void setUserType(String userType) {
-        this.userType = userType;
-    }
-
-    public String getUserMail() {
-        return userMail;
-    }
-
-    public void setUserMail(String userMail) {
-        this.userMail = userMail;
-    }
-
-    public String getValid() {
-        return isValid;
-    }
-
-    public void setValid(String valid) {
-        isValid = valid;
-    }
-
-    public String getRemarks() {
-        return remarks;
-    }
-
-    public void setRemarks(String remarks) {
-        this.remarks = remarks;
+    public void setMail(String mail) {
+        this.mail = mail;
     }
 
     public long getDbid() {
@@ -129,6 +92,6 @@ public class UserEntity implements Serializable, User {
     }
 
     public String getBusinessEmail() {
-        return this.userMail;
+        return this.mail;
     }
 }
