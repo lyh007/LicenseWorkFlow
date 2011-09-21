@@ -3,7 +3,6 @@ package com.lyh.licenseworkflow.service.impl;
 import com.lyh.licenseworkflow.po.GroupEntity;
 import com.lyh.licenseworkflow.po.GroupMemberEntity;
 import com.lyh.licenseworkflow.po.UserEntity;
-import com.lyh.licenseworkflow.service.LicenseWorkFlowIdentityService;
 import org.hibernate.Session;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -23,7 +22,7 @@ import java.util.List;
  * @version Revision: 1.00 Date: 11-9-21下午2:48
  * @Email liuyuhui007@gmail.com
  */
-public class LicenseWorkFlowIdentitySessionImpl implements LicenseWorkFlowIdentityService {
+public class LicenseWorkFlowIdentitySessionImpl implements IdentitySession {
     protected Session session;
     public LicenseWorkFlowIdentitySessionImpl() {
         this.session = BasicEnvironment.getFromCurrent(Session.class);

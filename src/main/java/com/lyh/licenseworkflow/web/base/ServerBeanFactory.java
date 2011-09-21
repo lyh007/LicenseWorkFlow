@@ -1,6 +1,5 @@
 package com.lyh.licenseworkflow.web.base;
 
-import com.lyh.licenseworkflow.service.LicenseWorkFlowIdentityService;
 import com.lyh.licenseworkflow.system.util.LogUtil;
 import org.apache.log4j.Logger;
 import org.jbpm.api.*;
