@@ -52,7 +52,10 @@
 
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>classpath:conf/spring/applicationContext*.xml</param-value>
+        <param-value>
+            classpath:conf/spring/applicationContext.xml,
+            classpath:conf/spring/jbpm-engine.xml
+        </param-value>
     </context-param>
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
