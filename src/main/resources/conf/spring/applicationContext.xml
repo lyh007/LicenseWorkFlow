@@ -27,6 +27,11 @@
             </list>
         </property>
     </bean>
+      <!-- hibernate模板 -->
+    <bean id="hibernateTemplate"
+        class="org.springframework.orm.hibernate3.HibernateTemplate">
+        <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
     <!--将JBPM配置导入Spring控制-->
     <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"></bean>
     <!-- Spring的事务管理器 -->

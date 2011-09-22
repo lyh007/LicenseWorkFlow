@@ -2,8 +2,8 @@ package com.lyh.licenseworkflow.dao.impl;
 
 import com.lyh.licenseworkflow.dao.UserDao;
 import com.lyh.licenseworkflow.po.User;
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,13 +18,14 @@ import java.util.List;
 @Repository("userDao")
 public class UserDaoImpl implements UserDao {
     @Autowired
-    private SessionFactory sessionFactory;
+    private HibernateTemplate hibernateTemplate;
 
     public void save(User user) {
-        sessionFactory.getCurrentSession().saveOrUpdate(user);
+        hibernateTemplate.save(user);
     }
 
     public List<User> queryUsers() {
-        return sessionFactory.getCurrentSession().createCriteria(User.class).list();
+        return hibernateTemplate.find("from User");
     }
+
 }
