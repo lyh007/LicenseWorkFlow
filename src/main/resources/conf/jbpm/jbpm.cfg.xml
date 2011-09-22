@@ -12,6 +12,6 @@
   <!-- To enable timers and messages in production use, this should be included. -->
   
   <!-- <import resource="jbpm.jobexecutor.cfg.xml" />-->
-  <import resource="jbpm.mail.templates.examples.xml" />
+  <!--<import resource="jbpm.mail.templates.examples.xml" />-->
 
 </jbpm-configuration>

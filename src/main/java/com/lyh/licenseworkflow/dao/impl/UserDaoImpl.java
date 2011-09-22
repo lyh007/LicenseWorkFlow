@@ -1,9 +1,8 @@
 package com.lyh.licenseworkflow.dao.impl;
 
+import com.lyh.licenseworkflow.dao.EnhancedHibernateDaoSupport;
 import com.lyh.licenseworkflow.dao.UserDao;
 import com.lyh.licenseworkflow.po.User;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,16 +15,13 @@ import java.util.List;
  */
 @Transactional
 @Repository("userDao")
-public class UserDaoImpl implements UserDao {
-    @Autowired
-    private HibernateTemplate hibernateTemplate;
-
-    public void save(User user) {
-        hibernateTemplate.save(user);
+public class UserDaoImpl extends EnhancedHibernateDaoSupport<User> implements UserDao {
+    @Override
+    protected String getEntityName() {
+        return User.class.getName();
     }
 
     public List<User> queryUsers() {
-        return hibernateTemplate.find("from User");
+        return getHibernateTemplate().find("from User");
     }
-
 }
