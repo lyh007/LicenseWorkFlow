@@ -28,19 +28,13 @@ import java.util.List;
         @Result(name = "success", location = "/WEB-INF/jsp/login.jsp")
 })
 public class IndexAction extends BaseAction {
-    @Resource
-    private SystemService systemService;
-    private UserDao userDao;
+//    @Resource
+//    private SystemService systemService;
+//    private UserDao userDao;
     private List<User> users = new ArrayList<User>();
 
     @Override
     public String execute() throws Exception {
-        users = systemService.queryAllUser();
-        com.lyh.licenseworkflow.po.User user = new com.lyh.licenseworkflow.po.User();
-        user.setEmail("abc@gmail.com");
-        user.setName("hello");
-        userDao.save(user);
-        userDao.queryUsers();
         return SUCCESS;
     }
 
@@ -50,13 +44,5 @@ public class IndexAction extends BaseAction {
 
     public void setUsers(List<User> users) {
         this.users = users;
-    }
-
-    public UserDao getUserDao() {
-        return userDao;
-    }
-
-    public void setUserDao(UserDao userDao) {
-        this.userDao = userDao;
     }
 }

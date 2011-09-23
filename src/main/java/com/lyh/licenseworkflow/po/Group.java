@@ -30,7 +30,14 @@ public class Group implements Serializable {
     /**
      * 子工作组
      */
-    private Set<Group> subWorkGroup = new HashSet<Group>(0);
+    private Set<Group> subGroups = new HashSet<Group>(0);
+
+    public Group() {
+    }
+
+    public Group(String name) {
+        this.name = name;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
@@ -59,12 +66,12 @@ public class Group implements Serializable {
     public void setParentGroup(Group parentGroup) {
         this.parentGroup = parentGroup;
     }
-    @OneToMany(targetEntity =Group.class ,cascade=CascadeType.ALL,mappedBy ="subWorkGroup")
-    public Set<Group> getSubWorkGroup() {
-        return subWorkGroup;
+    @OneToMany(targetEntity =Group.class ,cascade=CascadeType.ALL,mappedBy ="subGroups")
+    public Set<Group> getSubGroups() {
+        return subGroups;
     }
 
-    public void setSubWorkGroup(Set<Group> subWorkGroup) {
-        this.subWorkGroup = subWorkGroup;
+    public void setSubGroups(Set<Group> subGroups) {
+        this.subGroups = subGroups;
     }
 }

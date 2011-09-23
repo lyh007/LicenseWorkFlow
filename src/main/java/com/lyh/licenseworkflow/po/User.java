@@ -2,6 +2,8 @@ package com.lyh.licenseworkflow.po;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * 用户模型
@@ -10,7 +12,7 @@ import java.io.Serializable;
  * @Email liuyuhui007@gmail.com
  */
 @Entity
-@Table(name = "LICENCE_USER")
+@Table(name = "LICENSE_USER")
 public class User implements Serializable {
      /** 数据库唯一标识 */
     private long id;
@@ -22,6 +24,24 @@ public class User implements Serializable {
     private String realName;
     /** 密码（需加密） */
     private String password;
+    /** 用户工作组ID */
+	private Set<Group> groups = new HashSet<Group>();
+
+    public User() {
+    }
+
+    public User(String name, String realName) {
+        this.name = name;
+        this.realName = realName;
+        this.password="11111111";
+    }
+
+    public User(String name, String realName, String password) {
+        this.name = name;
+        this.realName = realName;
+        this.password = password;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     public long getId() {
@@ -62,5 +82,16 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @JoinTable(name = "LICENSE_USER_GROUP",
+        joinColumns = {@JoinColumn(name = "USER_ID", referencedColumnName = "id")},
+        inverseJoinColumns = {@JoinColumn(name = "GROUP_ID", referencedColumnName = "id")})
+    public Set<Group> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(Set<Group> groups) {
+        this.groups = groups;
     }
 }

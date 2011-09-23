@@ -81,6 +81,9 @@ public abstract class EnhancedHibernateDaoSupport<T> {
         return (T) (getHibernateTemplate().get(getEntityName(), id));
     }
 
+    public T getByName(String name){
+          return (T) (getHibernateTemplate().find("from " + getEntityName() +" where name="+name));
+    }
     /**
      * 保存实体
      *
