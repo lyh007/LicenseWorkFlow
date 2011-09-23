@@ -1,4 +1,4 @@
-package com.lyh.licenseworkflow.dao;
+package com.lyh.licenseworkflow.service;
 
 import com.lyh.licenseworkflow.po.User;
 import com.lyh.licenseworkflow.system.BaseInterface;
@@ -6,14 +6,13 @@ import com.lyh.licenseworkflow.system.BaseInterface;
 import java.util.List;
 
 /**
- * 用户DAO
- *
+ * 用户Service
  * @author kevin
- * @version Revision: 1.00 Date: 11-9-22下午12:35
+ * @version Revision: 1.00 Date: 11-9-23上午11:06
  * @Email liuyuhui007@gmail.com
  */
-public interface UserDao extends BaseInterface<User> {
-    /**
+public interface UserService extends BaseInterface<User> {
+     /**
      * 获取所有的用户
      *
      * @return 用户列表

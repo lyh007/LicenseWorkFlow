@@ -24,6 +24,10 @@ public class Group implements Serializable {
      */
     private String name;
     /**
+     * 工作组中文名称
+     */
+    private String cnName;
+    /**
      * 父工作组
      */
     private Group parentGroup;
@@ -37,6 +41,11 @@ public class Group implements Serializable {
 
     public Group(String name) {
         this.name = name;
+    }
+
+    public Group(String name, String cnName) {
+        this.name = name;
+        this.cnName = cnName;
     }
 
     @Id
@@ -73,5 +82,13 @@ public class Group implements Serializable {
 
     public void setSubGroups(Set<Group> subGroups) {
         this.subGroups = subGroups;
+    }
+
+    public String getCnName() {
+        return cnName;
+    }
+
+    public void setCnName(String cnName) {
+        this.cnName = cnName;
     }
 }

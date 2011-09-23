@@ -1,13 +1,12 @@
 package com.lyh.licenseworkflow.web.action;
 
-import com.lyh.licenseworkflow.dao.UserDao;
-import com.lyh.licenseworkflow.service.SystemService;
+import com.lyh.licenseworkflow.po.User;
+import com.lyh.licenseworkflow.service.UserService;
 import com.lyh.licenseworkflow.web.base.BaseAction;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
-import org.jbpm.api.identity.User;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
@@ -28,13 +27,13 @@ import java.util.List;
         @Result(name = "success", location = "/WEB-INF/jsp/login.jsp")
 })
 public class IndexAction extends BaseAction {
-//    @Resource
-//    private SystemService systemService;
-//    private UserDao userDao;
+    @Resource
+    private UserService userService;
     private List<User> users = new ArrayList<User>();
 
     @Override
     public String execute() throws Exception {
+        users = userService.getAllUsers();
         return SUCCESS;
     }
 

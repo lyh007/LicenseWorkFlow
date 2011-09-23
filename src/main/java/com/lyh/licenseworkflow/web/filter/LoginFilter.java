@@ -1,5 +1,6 @@
 package com.lyh.licenseworkflow.web.filter;
 
+import com.lyh.licenseworkflow.po.User;
 import com.lyh.licenseworkflow.system.util.LicenseWorkFlowConstants;
 import com.lyh.licenseworkflow.system.util.LogUtil;
 import org.apache.commons.lang.StringUtils;
@@ -56,11 +57,12 @@ public class LoginFilter implements Filter {
         if (!checkPermission) {// 不需要检查是否登录，直接放行
             filterChain.doFilter(httpRequest, httpResponse);
         } else {// 需要检查权限，判断用户是否已经登录
-            String loginUser = (String) httpRequest.getSession().getAttribute(LicenseWorkFlowConstants.SESSION_USER);
+            User loginUser = (User) httpRequest.getSession().getAttribute(LicenseWorkFlowConstants.SESSION_USER);
             if (loginUser == null) {
                 //如果被拦截，那么先记录上次想请求的地址，以便下次登录后直接跳转过去。
                 //session失效
-                httpResponse.sendRedirect(httpRequest.getContextPath() + "/index.jsp?wonderUrl=" + wonderUrl);
+//                httpResponse.sendRedirect(httpRequest.getContextPath() + "/index.action?wonderUrl=" + wonderUrl);
+                 httpResponse.sendRedirect(httpRequest.getContextPath() + "/index.action");
                 return;
             } else {
                 filterChain.doFilter(httpRequest, httpResponse);

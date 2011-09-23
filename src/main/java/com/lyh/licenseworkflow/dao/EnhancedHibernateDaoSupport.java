@@ -1,5 +1,6 @@
 package com.lyh.licenseworkflow.dao;
 
+import com.lyh.licenseworkflow.po.User;
 import com.lyh.licenseworkflow.system.OceanRuntimeException;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.ArrayUtils;
@@ -20,6 +21,7 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 
 import javax.annotation.Resource;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -81,9 +83,21 @@ public abstract class EnhancedHibernateDaoSupport<T> {
         return (T) (getHibernateTemplate().get(getEntityName(), id));
     }
 
-    public T getByName(String name){
-          return (T) (getHibernateTemplate().find("from " + getEntityName() +" where name="+name));
+    /**
+     * 通过用户名获取用户信息
+     *
+     * @param name 用户名
+     * @return 用户信息
+     */
+    public T getByName(String name) {
+       T result=null;
+       List<T> list = (List<T>)getHibernateTemplate().find("from " + getEntityName() + " where name='" + name+"'");
+       if(list!=null && list.size()>0){
+           result = list.get(0);
+       }
+        return result;
     }
+
     /**
      * 保存实体
      *

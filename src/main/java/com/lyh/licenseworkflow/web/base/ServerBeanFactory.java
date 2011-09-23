@@ -28,6 +28,7 @@ public class ServerBeanFactory {
     private static HibernateTemplate hibernateTemplate = null;
     //技术支持  销售人员 销售负责人（销售总监及助理） License管理员 老板
     private static String[] groups = {"instructor", "vendition", "majordomo", "admin", "boss"};
+     private static String[] groupNames = {"技术支持", "销售人员", "销售负责人", "License管理员", "老板"};
 
     /**
      * 分别初始化各个模块，如果有单个模块初始化失败则不影响系统其它模块
@@ -59,7 +60,7 @@ public class ServerBeanFactory {
             //系统中已经存在则不初始化
             if (dbGroups == null || dbGroups.size() == 0) {
                 identityService.createGroup(groups[i]);
-                hibernateTemplate.save(new Group(groups[i]));
+                hibernateTemplate.save(new Group(groups[i],groupNames[i]));
             }
 
         }
