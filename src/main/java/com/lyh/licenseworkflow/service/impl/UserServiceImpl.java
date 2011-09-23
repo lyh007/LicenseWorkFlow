@@ -3,10 +3,13 @@ package com.lyh.licenseworkflow.service.impl;
 import com.lyh.licenseworkflow.dao.UserDao;
 import com.lyh.licenseworkflow.po.User;
 import com.lyh.licenseworkflow.service.UserService;
+import com.lyh.licenseworkflow.system.engine.JBPMProcessTemplate;
+import org.jbpm.api.ProcessDefinition;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import javax.jnlp.ExtendedService;
 import java.util.List;
 
 /**
@@ -18,7 +21,7 @@ import java.util.List;
  */
 @Service("userService")
 @Transactional
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends JBPMProcessTemplate implements UserService {
     @Resource
     private UserDao userDao;
 
@@ -77,6 +80,9 @@ public class UserServiceImpl implements UserService {
      * @return 用户信息
      */
     public User getByName(String name) {
-        return userDao.getByName(name);
+        User user = null;
+        user = userDao.getByName(name);
+
+        return user;
     }
 }

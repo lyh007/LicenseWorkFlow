@@ -15,9 +15,13 @@ public class LicenseWorkFlowConstants {
     /**
      * 用户key，存放到HttpSession中引用User对象的数据库标识
      */
-  //  public final static String SESSION_USER_ID = "sessionUserId";
+    //  public final static String SESSION_USER_ID = "sessionUserId";
     /**
      * 用户key，存放到HttpSession中引用User对象的用户名
      */
-  //  public final static String SESSION_USER_NAME = "sessionUserName";
+    //  public final static String SESSION_USER_NAME = "sessionUserName";
+
+    //技术支持  销售人员 销售负责人（销售总监及助理） License管理员 老板
+    public static String[] groups = {"instructor", "vendition", "majordomo", "admin", "boss"};
+    public static String[] groupNames = {"技术支持", "销售人员", "销售负责人", "License管理员", "老板"};
 }

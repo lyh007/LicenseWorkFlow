@@ -2,6 +2,7 @@ package com.lyh.licenseworkflow.web.base;
 
 import com.lyh.licenseworkflow.po.Group;
 import com.lyh.licenseworkflow.po.User;
+import com.lyh.licenseworkflow.system.util.LicenseWorkFlowConstants;
 import com.lyh.licenseworkflow.system.util.LogUtil;
 import org.apache.log4j.Logger;
 import org.jbpm.api.*;
@@ -26,9 +27,6 @@ public class ServerBeanFactory {
     private static ServletContext scx = null;
     private static ProcessEngine processEngine = null;
     private static HibernateTemplate hibernateTemplate = null;
-    //技术支持  销售人员 销售负责人（销售总监及助理） License管理员 老板
-    private static String[] groups = {"instructor", "vendition", "majordomo", "admin", "boss"};
-     private static String[] groupNames = {"技术支持", "销售人员", "销售负责人", "License管理员", "老板"};
 
     /**
      * 分别初始化各个模块，如果有单个模块初始化失败则不影响系统其它模块
@@ -55,12 +53,12 @@ public class ServerBeanFactory {
         IdentityService identityService = getIdentityService();
 
         //创建用户组
-        for (int i = 0; i < groups.length; i++) {
-            List<Group> dbGroups = (List<Group>) hibernateTemplate.find("from " + Group.class.getName() + " where name='" + groups[i] + "'");
+        for (int i = 0; i < LicenseWorkFlowConstants.groups.length; i++) {
+            List<Group> dbGroups = (List<Group>) hibernateTemplate.find("from " + Group.class.getName() + " where name='" + LicenseWorkFlowConstants.groups[i] + "'");
             //系统中已经存在则不初始化
             if (dbGroups == null || dbGroups.size() == 0) {
-                identityService.createGroup(groups[i]);
-                hibernateTemplate.save(new Group(groups[i],groupNames[i]));
+                identityService.createGroup(LicenseWorkFlowConstants.groups[i]);
+                hibernateTemplate.save(new Group(LicenseWorkFlowConstants.groups[i],LicenseWorkFlowConstants.groupNames[i]));
             }
 
         }

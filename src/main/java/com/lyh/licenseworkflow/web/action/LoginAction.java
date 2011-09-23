@@ -1,5 +1,6 @@
 package com.lyh.licenseworkflow.web.action;
 
+import com.lyh.licenseworkflow.po.Group;
 import com.lyh.licenseworkflow.po.User;
 import com.lyh.licenseworkflow.service.UserService;
 import com.lyh.licenseworkflow.system.util.LicenseWorkFlowConstants;
@@ -30,7 +31,12 @@ import java.util.List;
 @Namespace("/")
 @Results({
         @Result(name = "success", location = "/index.jsp"),
-        @Result(name = "login", location = "/WEB-INF/jsp/login.jsp")
+        @Result(name = "login", location = "/WEB-INF/jsp/login.jsp"),
+        @Result(name = "instructor", location = "/WEB-INF/jsp/instructor/index.jsp"),
+        @Result(name = "vendition", location = "/WEB-INF/jsp/vendition/index.jsp"),
+        @Result(name = "majordomo", location = "/WEB-INF/jsp/majordomo/index.jsp"),
+        @Result(name = "admin", location = "/WEB-INF/jsp/admin/index.jsp"),
+        @Result(name = "boss", location = "/WEB-INF/jsp/boss/index.jsp")
 })
 public class LoginAction extends BaseAction {
     private String name;
@@ -59,8 +65,26 @@ public class LoginAction extends BaseAction {
             addActionError("user password is wrong!");
             return "login";
         }
+        String groupName = "";
+        if (user.getGroups() != null && user.getGroups().size() > 0) {
+            List<Group> groupList = new ArrayList<Group>();
+            groupList.addAll(user.getGroups());
+            groupName = groupList.get(0).getName();
+        }
         HttpSession session = request.getSession();
         session.setAttribute(LicenseWorkFlowConstants.SESSION_USER, user);
+        if (groupName.equals("instructor")) {
+            return "instructor";
+        } else if (groupName.equals("vendition"))
+            return "vendition";
+        else if (groupName.equals("majordomo"))
+            return "majordomo";
+        else if (groupName.equals("admin"))
+            return "admin";
+        else if (groupName.equals("boss"))
+            return "boss";
+        else
+            response.sendRedirect("index.jsp");
         return SUCCESS;
     }
 

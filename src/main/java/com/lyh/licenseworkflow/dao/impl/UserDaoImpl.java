@@ -40,4 +40,22 @@ public class UserDaoImpl extends EnhancedHibernateDaoSupport<User> implements Us
         }
         return users;
     }
+
+    /**
+     * 通过用户名获取用户信息
+     *
+     * @param name 用户名
+     * @return 用户信息
+     */
+    public User getByName(String name) {
+        User result = null;
+        List<User> list = (List<User>) getHibernateTemplate().find("from " + getEntityName() + " where name='" + name + "'");
+        if (list != null && list.size() > 0) {
+            result = list.get(0);
+            if (result != null) {
+                Hibernate.initialize(result.getGroups());
+            }
+        }
+        return result;
+    }
 }

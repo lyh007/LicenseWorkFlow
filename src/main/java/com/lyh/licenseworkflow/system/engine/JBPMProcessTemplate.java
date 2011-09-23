@@ -3,18 +3,20 @@ package com.lyh.licenseworkflow.system.engine;
 import org.jbpm.api.*;
 
 /**
+ * JBPM模板类，系统初始化时已完成装配
+ *
  * @author kevin
  * @version Revision: 1.00 Date: 11-9-22上午11:19
  * @Email liuyuhui007@gmail.com
  */
 public class JBPMProcessTemplate {
-    protected ProcessEngine processEngine;
-    protected RepositoryService repositoryService;
-    protected ExecutionService executionService;
-    protected TaskService taskService;
-    protected HistoryService historyService;
-    protected ManagementService managementService;
-    protected IdentityService identityService;
+    protected static ProcessEngine processEngine;
+    protected static RepositoryService repositoryService;
+    protected static ExecutionService executionService;
+    protected static TaskService taskService;
+    protected static HistoryService historyService;
+    protected static ManagementService managementService;
+    protected static IdentityService identityService;
 
     public void ininMethod() {
         this.repositoryService = processEngine.getRepositoryService();
@@ -29,19 +31,11 @@ public class JBPMProcessTemplate {
         return processEngine;
     }
 
-    public void setProcessEngine(ProcessEngine processEngine) {
-        this.processEngine = processEngine;
-    }
-
     public RepositoryService getRepositoryService() {
         if (repositoryService == null) {
             repositoryService = processEngine.getRepositoryService();
         }
         return repositoryService;
-    }
-
-    public void setRepositoryService(RepositoryService repositoryService) {
-        this.repositoryService = repositoryService;
     }
 
     public ExecutionService getExecutionService() {
@@ -51,19 +45,11 @@ public class JBPMProcessTemplate {
         return executionService;
     }
 
-    public void setExecutionService(ExecutionService executionService) {
-        this.executionService = executionService;
-    }
-
     public TaskService getTaskService() {
         if (taskService == null) {
             taskService = processEngine.getTaskService();
         }
         return taskService;
-    }
-
-    public void setTaskService(TaskService taskService) {
-        this.taskService = taskService;
     }
 
     public HistoryService getHistoryService() {
@@ -72,18 +58,10 @@ public class JBPMProcessTemplate {
         return historyService;
     }
 
-    public void setHistoryService(HistoryService historyService) {
-        this.historyService = historyService;
-    }
-
     public ManagementService getManagementService() {
         if (null == managementService)
             managementService = processEngine.getManagementService();
         return managementService;
-    }
-
-    public void setManagementService(ManagementService managementService) {
-        this.managementService = managementService;
     }
 
     public IdentityService getIdentityService() {
@@ -92,7 +70,16 @@ public class JBPMProcessTemplate {
         return identityService;
     }
 
-    public void setIdentityService(IdentityService identityService) {
-        this.identityService = identityService;
+    public void setProcessEngine(ProcessEngine processEngine) {
+        this.processEngine = processEngine;
+    }
+
+    /**
+     * 获取当前流程定义
+     *
+     * @return 流程定义信息
+     */
+    public ProcessDefinition getProcessDefinition() {
+        return getRepositoryService().createProcessDefinitionQuery().list().get(0);
     }
 }

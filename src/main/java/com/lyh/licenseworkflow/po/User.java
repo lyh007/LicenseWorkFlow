@@ -33,7 +33,7 @@ public class User implements Serializable {
     public User(String name, String realName) {
         this.name = name;
         this.realName = realName;
-        this.password="11111111";
+        this.password="1";
     }
 
     public User(String name, String realName, String password) {

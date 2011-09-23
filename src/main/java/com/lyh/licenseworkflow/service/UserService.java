@@ -2,6 +2,8 @@ package com.lyh.licenseworkflow.service;
 
 import com.lyh.licenseworkflow.po.User;
 import com.lyh.licenseworkflow.system.BaseInterface;
+import org.jbpm.api.ProcessDefinition;
+import org.subethamail.smtp.command.HelloCommand;
 
 import java.util.List;
 
@@ -25,4 +27,11 @@ public interface UserService extends BaseInterface<User> {
      * @return 用户信息
      */
     public User getByName(String name);
+
+     /**
+     * 获取当前流程定义
+     *
+     * @return 流程定义信息
+     */
+    public ProcessDefinition getProcessDefinition();
 }
