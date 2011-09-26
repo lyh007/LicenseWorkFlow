@@ -1,13 +1,20 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="common/taglibs.jsp" %>
 <html>
-<head><title>Simple jsp page</title></head>
-<body>
+<head>
+    <title>License申请主页</title>
+    <script type="text/javascript">
+        function init(){
+            document.getElementById("loginNameId").focus();
+        }
+    </script>
+</head>
+<body onload="init();">
 <fieldset>
     <legend>登陆</legend>
     <s:actionerror/>
     <form action="login.action" method="post">
-        用户名：<input type="text" name="name" value="${name}"/><br/>
+        用户名：<input type="text" name="name" value="${name}" id="loginNameId"/><br/>
         密&nbsp;&nbsp;&nbsp;&nbsp;码：<input type="password" name="password" value="${password}"/><br/>
         <input type="submit" value="登录"/>
     </form>

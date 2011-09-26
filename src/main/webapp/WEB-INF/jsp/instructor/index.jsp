@@ -35,6 +35,35 @@
         </tr>
         </thead>
         <tbody>
+        <s:if test="issues!=null">
+            <s:iterator value="issues" status="issueStatus">
+                <tr>
+                    <td><s:property value="id"/></td>
+                    <td><s:property value="costumeName"/></td>
+                    <td><s:property value="money"/></td>
+                    <td>
+                        <s:if test="licenseType==0">
+                            临时
+                        </s:if>
+                        <s:else>
+                            永久
+                        </s:else>
+                    </td>
+                    <td><s:date name="requestTime" format="yyyy-MM-dd HH:mm:ss"/></td>
+                    <td><s:property value="requestUser.realName"/></td>
+                    <td>
+                        <s:if test="workFlowNodeName!=null || workFlowNodeName!=''">
+                            <s:property value="workFlowNodeName"/>
+                        </s:if>
+                        <s:else>结束</s:else>
+                    </td>
+                    <td><a href="instructor/instructor!view.action?issue.id=<s:property value="id"/>">查看</a></td>
+                </tr>
+            </s:iterator>
+        </s:if>
+        <s:else>
+            无申请记录
+        </s:else>
         </tbody>
     </table>
     <table name="table" border="0" width="100%">

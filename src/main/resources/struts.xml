@@ -10,7 +10,7 @@
 
     <package name="default" namespace="/" extends="struts-default">
         <global-results>
-            <result name="exception">/WEB-INF/jsps/common/exception.jsp</result>
+            <result name="exception">/WEB-INF/jsp/common/exception.jsp</result>
         </global-results>
         <global-exception-mappings>
             <exception-mapping exception="com.lyh.licenseworkflow.system.OceanRuntimeException" result="exception"/>

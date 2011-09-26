@@ -83,7 +83,7 @@ public class User implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
-    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinTable(name = "LICENSE_USER_GROUP",
         joinColumns = {@JoinColumn(name = "USER_ID", referencedColumnName = "id")},
         inverseJoinColumns = {@JoinColumn(name = "GROUP_ID", referencedColumnName = "id")})

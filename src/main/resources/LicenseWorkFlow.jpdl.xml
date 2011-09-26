@@ -4,7 +4,7 @@
 	<start g="304,19,48,48" name="start1">
 		<transition g="-71,-17" name="技术支持填写申请表" to="销售人员" />
 	</start>
-	<task assignee="#{venditionUser}" form="requestSubmit.jsp" g="283,89,92,52"
+	<task assignee="#{venditionUser}" g="283,89,92,52"
 		name="销售人员">
 		<transition g="-83,-7" name="根据合同金额判断" to="exclusive1" />
 		<transition g="36,113;37,607:-31,-18" name="否决" to="end1" />

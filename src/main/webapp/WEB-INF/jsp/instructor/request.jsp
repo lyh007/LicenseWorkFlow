@@ -20,21 +20,21 @@
 </table>
 <fieldset>
     <legend>申请表(技术人员填写)</legend>
-    <form action="requestSubmit.jsp" method="post">
+    <form action="instructor/instructor!submitIssue.action" method="post">
         <input type="hidden" name="processDefinitionId" value="${processDefinitionId}">
         <table name="table" border="1" width="100%">
             <tr>
                 <td align="right">客户名称：</td>
-                <td align="left"><input type="text" name="costumeName" value="大燕国"/></td>
+                <td align="left"><input type="text" name="issue.costumeName" value="大燕国"/></td>
             </tr>
             <tr>
                 <td align="right">预计合同金额：</td>
-                <td align="left"><input type="text" name="money" value="30"/>（单位：万元）</td>
+                <td align="left"><input type="text" name="issue.money" value="30"/>（单位：万元）</td>
             </tr>
             <tr>
                 <td align="right">注册License类型：</td>
                 <td align="left">
-                    <select name="licenseType" style="width:155px">
+                    <select name="issue.licenseType" style="width:155px">
                         <option value="0" selected>临时</option>
                         <option value="1">永久</option>
                     </select>
