@@ -3,8 +3,12 @@ package com.lyh.licenseworkflow.po;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
+ * 工单(请求)
+ *
  * @author kevin
  * @version Revision: 1.00 Date: 11-9-26上午10:45
  * @Email liuyuhui007@gmail.com
@@ -50,6 +54,11 @@ public class Issue implements Serializable {
     private String auditResult;
     private String processInstanceId;
     private String workFlowNodeName; //流程节点名称
+
+    /**
+     * 审核信息
+     */
+    private Set<Audit> audits = new HashSet<Audit>();
 
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
@@ -144,5 +153,14 @@ public class Issue implements Serializable {
 
     public void setWorkFlowNodeName(String workFlowNodeName) {
         this.workFlowNodeName = workFlowNodeName;
+    }
+
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER,mappedBy = "issue")
+    public Set<Audit> getAudits() {
+        return audits;
+    }
+
+    public void setAudits(Set<Audit> audits) {
+        this.audits = audits;
     }
 }
