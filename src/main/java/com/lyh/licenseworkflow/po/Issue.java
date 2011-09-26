@@ -45,15 +45,13 @@ public class Issue implements Serializable {
      */
     private Date requestTime;
     /**
-     * 审核意见
+     * 流程实例标识
      */
-    private String auditNotion;
-    /**
-     * 审核状态
-     */
-    private String auditResult;
     private String processInstanceId;
-    private String workFlowNodeName; //流程节点名称
+    /**
+     * 流程节点名称
+     */
+    private String workFlowNodeName;
 
     /**
      * 审核信息
@@ -122,22 +120,6 @@ public class Issue implements Serializable {
         this.requestTime = requestTime;
     }
 
-    public String getAuditNotion() {
-        return auditNotion;
-    }
-
-    public void setAuditNotion(String auditNotion) {
-        this.auditNotion = auditNotion;
-    }
-
-    public String getAuditResult() {
-        return auditResult;
-    }
-
-    public void setAuditResult(String auditResult) {
-        this.auditResult = auditResult;
-    }
-
     public String getProcessInstanceId() {
         return processInstanceId;
     }
@@ -155,7 +137,7 @@ public class Issue implements Serializable {
         this.workFlowNodeName = workFlowNodeName;
     }
 
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER,mappedBy = "issue")
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "issue")
     public Set<Audit> getAudits() {
         return audits;
     }

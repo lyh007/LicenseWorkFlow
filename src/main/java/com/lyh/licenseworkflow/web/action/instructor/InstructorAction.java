@@ -1,5 +1,6 @@
 package com.lyh.licenseworkflow.web.action.instructor;
 
+import com.lyh.licenseworkflow.po.Audit;
 import com.lyh.licenseworkflow.po.Issue;
 import com.lyh.licenseworkflow.po.User;
 import com.lyh.licenseworkflow.service.IssueService;
@@ -75,14 +76,25 @@ public class InstructorAction extends BaseAction {
         Map<String, Object> variables = new HashMap<String, Object>();
         User sessionUser = (User) session.getAttribute(LicenseWorkFlowConstants.SESSION_USER);
         User user = userService.getByName(sessionUser.getName());
-        issue.setAuditNotion("发起人");
-        issue.setAuditResult("提交申请完成");
         issue.setRequestUser(user);
         if (requestTime != null && requestTime.length() > 0) {
             issue.setRequestTime(sdf.parse(requestTime));
         }
         User vUser = userService.getByName(venditionUser);
         issue.setVenditionUser(vUser);
+
+        Audit audit = new Audit();
+        // audit.setAuditDept();//用户组名称
+        audit.setAuditNotion("发起人");
+        audit.setAuditResult("提交申请完成");
+        if (requestTime != null && requestTime.length() > 0) {
+            audit.setAuditTime(sdf.parse(requestTime));
+        }
+        audit.setAuditUser(vUser);
+        audit.setIssue(issue);
+        Set<Audit> audits = new HashSet<Audit>();
+        audits.add(audit);
+        issue.setAudits(audits);
         issueService.save(issue);
         //申请信息
         variables.put("venditionUser", venditionUser);
@@ -95,8 +107,8 @@ public class InstructorAction extends BaseAction {
 
     //查看申请
     public String view() throws Exception {
-        if(issue.getId()==0) throw new OceanRuntimeException("标识不合法");
-        issue=issueService.getById(issue.getId());
+        if (issue.getId() == 0) throw new OceanRuntimeException("标识不合法");
+        issue = issueService.getById(issue.getId());
         return "view";
     }
 

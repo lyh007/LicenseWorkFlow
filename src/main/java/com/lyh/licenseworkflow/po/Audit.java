@@ -2,6 +2,7 @@ package com.lyh.licenseworkflow.po;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * 工单(请求)审核信息
@@ -36,7 +37,7 @@ public class Audit implements Serializable {
     /**
      * 审核时
      */
-    private String auditTime;
+    private Date auditTime;
     /**
      * 审核状态
      */
@@ -52,8 +53,8 @@ public class Audit implements Serializable {
         this.id = id;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "ISSUE_AUDIT")
+    @ManyToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "ISSUE_AUDIT", referencedColumnName = "id")
     public Issue getIssue() {
         return issue;
     }
@@ -70,7 +71,7 @@ public class Audit implements Serializable {
         this.auditDept = auditDept;
     }
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "AUDIT_USER")
     public User getAuditUser() {
         return auditUser;
@@ -88,11 +89,11 @@ public class Audit implements Serializable {
         this.auditNotion = auditNotion;
     }
 
-    public String getAuditTime() {
+    public Date getAuditTime() {
         return auditTime;
     }
 
-    public void setAuditTime(String auditTime) {
+    public void setAuditTime(Date auditTime) {
         this.auditTime = auditTime;
     }
 
