@@ -1,6 +1,7 @@
 package com.lyh.licenseworkflow.web.action.instructor;
 
 import com.lyh.licenseworkflow.po.Audit;
+import com.lyh.licenseworkflow.po.Group;
 import com.lyh.licenseworkflow.po.Issue;
 import com.lyh.licenseworkflow.po.User;
 import com.lyh.licenseworkflow.service.IssueService;
@@ -84,7 +85,13 @@ public class InstructorAction extends BaseAction {
         issue.setVenditionUser(vUser);
 
         Audit audit = new Audit();
-        // audit.setAuditDept();//用户组名称
+         String groupName = "";
+        if (user.getGroups() != null && user.getGroups().size() > 0) {
+            List<Group> groupList = new ArrayList<Group>();
+            groupList.addAll(user.getGroups());
+            groupName = groupList.get(0).getCnName();
+        }
+        audit.setAuditDept(groupName);//用户组名称
         audit.setAuditNotion("发起人");
         audit.setAuditResult("提交申请完成");
         if (requestTime != null && requestTime.length() > 0) {

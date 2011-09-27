@@ -2,6 +2,8 @@ package com.lyh.licenseworkflow.system.engine;
 
 import org.jbpm.api.*;
 
+import java.io.InputStream;
+
 /**
  * JBPM模板类，系统初始化时已完成装配
  *
@@ -11,11 +13,18 @@ import org.jbpm.api.*;
  */
 public class JBPMProcessTemplate {
     protected static ProcessEngine processEngine;
+    //资源库服务
     protected static RepositoryService repositoryService;
+    //执行服务
     protected static ExecutionService executionService;
-    protected static TaskService taskService;
-    protected static HistoryService historyService;
+    //  管理服务
     protected static ManagementService managementService;
+    //任务服务
+    protected static TaskService taskService;
+    //历史服务
+    protected static HistoryService historyService;
+    //身份认证服务
+
     protected static IdentityService identityService;
 
     public void ininMethod() {
@@ -81,5 +90,21 @@ public class JBPMProcessTemplate {
      */
     public ProcessDefinition getProcessDefinition() {
         return getRepositoryService().createProcessDefinitionQuery().list().get(0);
+    }
+
+    /**
+     * 根据流程实例获取流程图片流
+     *
+     * @param processInstanceId 流程实例标识
+     * @return 图片流
+     */
+    public InputStream getFlowchart(String processInstanceId) {
+        //获取流程实列
+        ProcessInstance processInstance = getExecutionService().findProcessInstanceById(processInstanceId);
+        //获取流程定义标识
+        String processDefinitionId = processInstance.getProcessDefinitionId();
+        //获取流程定义实例
+        ProcessDefinition processDefinition =getRepositoryService().createProcessDefinitionQuery().processDefinitionId(processDefinitionId).uniqueResult();
+        return getRepositoryService().getResourceAsStream(processDefinition.getDeploymentId(),processDefinition.getImageResourceName());
     }
 }

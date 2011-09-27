@@ -22,7 +22,7 @@ import java.util.List;
  */
 @Controller
 @Scope("prototype")
-@ParentPackage(value = "struts-default")
+@ParentPackage(value = "default")
 @Namespace("/")
 @Results({
         @Result(name = "login", location = "/WEB-INF/jsp/login.jsp")

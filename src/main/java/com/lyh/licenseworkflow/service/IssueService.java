@@ -3,6 +3,7 @@ package com.lyh.licenseworkflow.service;
 import com.lyh.licenseworkflow.po.Issue;
 import com.lyh.licenseworkflow.system.BaseInterface;
 
+import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
@@ -33,4 +34,12 @@ public interface IssueService extends BaseInterface<Issue> {
      * @return 执行节点名称
      */
     public String getActiveName(String processInstanceId);
+
+    /**
+     * 根据流程实例获取流程图片流
+     *
+     * @param processInstanceId 流程实例标识
+     * @return 图片流
+     */
+    public InputStream getFlowchart(String processInstanceId);
 }

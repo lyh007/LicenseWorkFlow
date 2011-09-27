@@ -57,6 +57,7 @@
 
 <fieldset>
     <legend>已审核意见</legend>
+    <br> 流程实例标识:<s:property value="issue.processInstanceId"/>
     <table name="table" border="1" width="100%">
         <tr>
             <td>审核角色</td>
@@ -65,30 +66,30 @@
             <td>审核时间</td>
             <td>审核状态</td>
         </tr>
-        <%--<%--%>
-            <%--if (auditList != null && auditList.size() > 0) {--%>
-                <%--for (Map<String, Object> m : auditList) {--%>
-        <%--%>--%>
-        <%--<tr>--%>
-            <%--<td><%=m.get("auditDept")%>--%>
-            <%--</td>--%>
-            <%--<td><%=JbpmUtil.getUserName((String) m.get("auditUser"))%>--%>
-            <%--</td>--%>
-            <%--<td><%=m.get("auditNotion")%>--%>
-            <%--</td>--%>
-            <%--<td><%=m.get("auditTime")%>--%>
-            <%--</td>--%>
-            <%--<td><%=m.get("auditResult")%>--%>
-            <%--</td>--%>
-        <%--</tr>--%>
-        <%--<%--%>
-                <%--}--%>
-            <%--}--%>
-        <%--%>--%>
+        <s:if test="issue.audits!=null">
+            <s:iterator value="issue.audits" var="audit" status="auditStatus">
+                <tr>
+                    <td><s:property value="auditDept"/></td>
+                    <td><s:property value="auditUser.realName"/></td>
+                    <td><s:property value="auditNotion"/></td>
+                    <td><s:date name="auditTime" format="yyyy-MM-dd HH:mm:ss"/></td>
+                    <td><s:property value="auditResult"/></td>
+                </tr>
+            </s:iterator>
+        </s:if>
     </table>
 </fieldset>
-
 <br>
-
+<fieldset>
+    <legend>项目审批流程图</legend>
+    <div>
+        <img src="flowchart.action?processInstanceId=<s:property value="issue.processInstanceId"/>" alt="流程图">
+    </div>
+</fieldset>
+<table name="table" border="0" width="100%">
+    <tr>
+        <td align="center">【<a href="instructor/instructor.action">返回</a>】</td>
+    </tr>
+</table>
 </body>
 </html>
