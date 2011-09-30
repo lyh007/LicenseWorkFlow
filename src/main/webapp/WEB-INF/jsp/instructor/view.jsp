@@ -83,7 +83,8 @@
 <fieldset>
     <legend>项目审批流程图</legend>
     <div>
-        <img src="flowchart.action?processInstanceId=<s:property value="issue.processInstanceId"/>" alt="流程图">
+       <iframe name="myframe" src="flowchart.action?processInstanceId=<s:property value="issue.processInstanceId"/>"
+		frameborder="0" scrolling="auto" width="1028" height="700" ></iframe>
     </div>
 </fieldset>
 <table name="table" border="0" width="100%">

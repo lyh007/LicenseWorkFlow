@@ -5,6 +5,10 @@ import com.lyh.licenseworkflow.system.OceanRuntimeException;
 import com.lyh.licenseworkflow.web.base.BaseAction;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
+import org.apache.struts2.convention.annotation.Result;
+import org.apache.struts2.convention.annotation.Results;
+import org.jbpm.api.ProcessDefinition;
+import org.jbpm.pvm.internal.model.ProcessDefinitionImpl;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
@@ -22,6 +26,9 @@ import java.io.InputStream;
 @Scope("prototype")
 @ParentPackage(value = "default")
 @Namespace("/")
+@Results({
+        @Result(name = "success", location = "/WEB-INF/jsp/common/flowchart.jsp")
+})
 public class FlowchartAction extends BaseAction {
     //流程实例标识
     private String processInstanceId;
@@ -31,6 +38,17 @@ public class FlowchartAction extends BaseAction {
 
     @Override
     public String execute() throws Exception {
+        if (processInstanceId == null || processInstanceId.length() == 0) {
+            throw new OceanRuntimeException("流程实例标识不合法");
+        }
+        //获取流程定义对象
+        ProcessDefinition processDefinition = issueService.getProcessDefinitionByInstanceId(processInstanceId);
+        ProcessDefinitionImpl processDefinitionImpl = (ProcessDefinitionImpl) processDefinition;
+
+        return SUCCESS;
+    }
+
+    public String outImage() throws Exception {
         //设置页面访问头
         response.setHeader("Cash", "no cash");
         response.setContentType("image/png");
