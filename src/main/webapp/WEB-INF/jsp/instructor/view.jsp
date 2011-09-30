@@ -57,7 +57,6 @@
 
 <fieldset>
     <legend>已审核意见</legend>
-    <br> 流程实例标识:<s:property value="issue.processInstanceId"/>
     <table name="table" border="1" width="100%">
         <tr>
             <td>审核角色</td>
