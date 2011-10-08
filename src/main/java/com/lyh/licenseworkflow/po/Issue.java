@@ -48,10 +48,6 @@ public class Issue implements Serializable {
      * 流程实例标识
      */
     private String processInstanceId;
-    /**
-     * 流程节点名称
-     */
-    private String workFlowNodeName;
 
     /**
      * 审核信息
@@ -126,15 +122,6 @@ public class Issue implements Serializable {
 
     public void setProcessInstanceId(String processInstanceId) {
         this.processInstanceId = processInstanceId;
-    }
-
-    @Transient
-    public String getWorkFlowNodeName() {
-        return workFlowNodeName;
-    }
-
-    public void setWorkFlowNodeName(String workFlowNodeName) {
-        this.workFlowNodeName = workFlowNodeName;
     }
 
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "issue")

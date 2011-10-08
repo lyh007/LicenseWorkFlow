@@ -32,8 +32,8 @@ import java.util.List;
 @Results({
         @Result(name = "success", location = "/index.jsp"),
         @Result(name = "login", location = "/WEB-INF/jsp/login.jsp"),
-        @Result(name = "instructor", location = "/WEB-INF/jsp/instructor/index.jsp"),
-        @Result(name = "vendition", location = "/WEB-INF/jsp/vendition/index.jsp"),
+        @Result(name = "instructor", location = "/instructor/instructor.action", type = "redirect"),
+        @Result(name = "vendition", location = "/vendition/vendition.action", type = "redirect"),
         @Result(name = "majordomo", location = "/WEB-INF/jsp/majordomo/index.jsp"),
         @Result(name = "admin", location = "/WEB-INF/jsp/admin/index.jsp"),
         @Result(name = "boss", location = "/WEB-INF/jsp/boss/index.jsp")

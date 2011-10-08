@@ -9,6 +9,8 @@ import com.lyh.licenseworkflow.service.UserService;
 import com.lyh.licenseworkflow.system.OceanRuntimeException;
 import com.lyh.licenseworkflow.system.util.LicenseWorkFlowConstants;
 import com.lyh.licenseworkflow.web.base.BaseAction;
+import com.lyh.licenseworkflow.web.vo.IssueVO;
+import net.sf.cglib.beans.BeanCopier;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
@@ -41,11 +43,11 @@ import java.util.*;
 public class InstructorAction extends BaseAction {
     public SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private String processDefinitionId;
-    private String nowDateTime;
+    private String nowDateTime;  //当前时间字符串
     private Issue issue;
     private String requestTime;
     private String venditionUser; //销售人员姓名
-    private List<Issue> issues = new ArrayList<Issue>();
+    private List<IssueVO> issues = new ArrayList<IssueVO>();
     @Resource
     private UserService userService;
     @Resource
@@ -54,11 +56,15 @@ public class InstructorAction extends BaseAction {
     @Override
     public String execute() throws Exception {
         List<Issue> dbIssues = new ArrayList<Issue>();
+        //查询库中所有的工单
         dbIssues = issueService.getAllIssues();
         for (Issue issue : dbIssues) {
-            String ActiveName = issueService.getActiveName(issue.getProcessInstanceId());
-            issue.setWorkFlowNodeName(ActiveName);
-            issues.add(issue);
+            String activeName = issueService.getActiveName(issue.getProcessInstanceId());
+            IssueVO issueVO = new IssueVO();
+            //设置工单的流程节点
+            issueVO.setWorkFlowNodeName(activeName);
+            LicenseWorkFlowConstants.issuePOTOVOCopier.copy(issue, issueVO, null);
+            issues.add(issueVO);
         }
         return "index";
     }
@@ -85,7 +91,7 @@ public class InstructorAction extends BaseAction {
         issue.setVenditionUser(vUser);
 
         Audit audit = new Audit();
-         String groupName = "";
+        String groupName = "";
         if (user.getGroups() != null && user.getGroups().size() > 0) {
             List<Group> groupList = new ArrayList<Group>();
             groupList.addAll(user.getGroups());
@@ -159,11 +165,11 @@ public class InstructorAction extends BaseAction {
         this.venditionUser = venditionUser;
     }
 
-    public List<Issue> getIssues() {
+    public List<IssueVO> getIssues() {
         return issues;
     }
 
-    public void setIssues(List<Issue> issues) {
+    public void setIssues(List<IssueVO> issues) {
         this.issues = issues;
     }
 }

@@ -3,21 +3,10 @@
 <html>
 <head>
     <base href="<%=basePath%>">
-    <title>技术人员-填写请求表单</title>
+    <title>技术支持-填写请求表单</title>
 </head>
 <body>
-<table border="0" width="100%">
-    <tr>
-        <td align="left"></td>
-        <td align="right">当前用户: <s:property value="#session.sessionUser.realName"/> &nbsp;&nbsp;&nbsp;&nbsp;
-            用户组：
-            <s:iterator value="#session.sessionUser.groups">
-                <s:property value="cnName"/>
-            </s:iterator>
-            &nbsp;&nbsp;&nbsp;&nbsp;【<a href="/logout.action">退出</a>】
-        </td>
-    </tr>
-</table>
+<%@include file="../common/header.jsp" %>
 <fieldset>
     <legend>申请表(技术人员填写)</legend>
     <form action="instructor/instructor!submitIssue.action" method="post">

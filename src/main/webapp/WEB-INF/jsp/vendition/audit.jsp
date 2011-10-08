@@ -3,7 +3,7 @@
 <html>
 <head>
     <base href="<%=basePath%>">
-    <title>技术支持-查看工单</title>
+    <title>销售人员-工单审核</title>
 </head>
 <body>
 <%@include file="../common/header.jsp" %>
@@ -67,17 +67,30 @@
         </s:if>
     </table>
 </fieldset>
-<br>
 <fieldset>
-    <legend>项目审批流程图</legend>
-    <div>
-       <iframe name="myframe" src="flowchart.action?processInstanceId=<s:property value="issue.processInstanceId"/>"
-		frameborder="0" scrolling="auto" width="1028" height="700" ></iframe>
-    </div>
+    <legend>事项审核</legend>
+    <form action="vendition/vendition!audit.action" method="post">
+        <input type="hidden" name="taskId" value="<s:property value="taskId"/>">
+        <input type="hidden" name="processInstanceId" value="<s:property value="issue.processInstanceId"/>">
+        <input type="hidden" name="auditDept" value="<s:iterator value="#session.sessionUser.groups"><s:property value="name"/></s:iterator>">
+        <input type="hidden" name="auditUser" value="<s:property value="#session.sessionUser.name"/>">
+
+        <input type="radio" name="result" value="1" checked/>同意
+        <input type="radio" name="result" value="0"/>不同意
+        <br/>
+        审批意见：
+        <textarea name="auditNotion" rows="4" cols="40">同意执行</textarea>
+        <br><br>
+        审核单位：<s:iterator value="#session.sessionUser.groups"><s:property value="cnName"/></s:iterator><br>
+        审核时间：<input type="text" name="auditTime" value="<s:property value="nowDateTime"/>" readOnly/><br>
+        审核人： <s:property value="#session.sessionUser.realName"/>
+        <br>
+        <input type="submit" value="提交"/>
+    </form>
 </fieldset>
 <table name="table" border="0" width="100%">
     <tr>
-        <td align="center">【<a href="instructor/instructor.action">返回</a>】</td>
+        <td align="center">【<a href="vendition/vendition.action">返回</a>】</td>
     </tr>
 </table>
 </body>

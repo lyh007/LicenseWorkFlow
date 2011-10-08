@@ -3,10 +3,10 @@
 <html>
 <head>
     <base href="<%=basePath%>">
-    <title>技术支持-主页</title>
+    <title>销售人员-主页</title>
 </head>
 <body>
-<<%@include file="../common/header.jsp" %>
+<%@include file="../common/header.jsp" %>
 <fieldset>
     <legend>申请信息</legend>
     <table border="1" width="100%">
@@ -46,7 +46,14 @@
                         </s:if>
                         <s:else>结束</s:else>
                     </td>
-                    <td><a href="instructor/instructor!view.action?issue.id=<s:property value="id"/>">查看</a></td>
+                    <td>
+                        <s:if test="showAudit">
+                            <a href="vendition/vendition!preAudit.action?issue.id=<s:property value="id"/>&taskId=<s:property value="issueTask.id"/>">审核</a>
+                        </s:if>
+                        <s:else>
+                            <a href="instructor/instructor!view.action?issue.id=<s:property value="id"/>">查看</a>
+                        </s:else>
+                    </td>
                 </tr>
             </s:iterator>
         </s:if>
@@ -54,11 +61,6 @@
             无申请记录
         </s:else>
         </tbody>
-    </table>
-    <table name="table" border="0" width="100%">
-        <tr>
-            <td><a href="instructor/instructor!request.action">发起申请</a></td>
-        </tr>
     </table>
 </fieldset>
 </body>
