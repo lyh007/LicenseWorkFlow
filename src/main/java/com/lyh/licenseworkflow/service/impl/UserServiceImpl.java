@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import javax.jnlp.ExtendedService;
 import java.util.List;
 
 /**
@@ -68,7 +67,6 @@ public class UserServiceImpl extends JBPMProcessTemplate implements UserService 
      *
      * @return 用户列表
      */
-    @Override
     public List<User> getAllUsers() {
         return userDao.getAllUsers();
     }
