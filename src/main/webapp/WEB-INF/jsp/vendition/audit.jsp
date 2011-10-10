@@ -71,10 +71,10 @@
     <legend>事项审核</legend>
     <form action="vendition/vendition!audit.action" method="post">
         <input type="hidden" name="taskId" value="<s:property value="taskId"/>">
-        <input type="hidden" name="processInstanceId" value="<s:property value="issue.processInstanceId"/>">
-        <input type="hidden" name="auditDept" value="<s:iterator value="#session.sessionUser.groups"><s:property value="name"/></s:iterator>">
-        <input type="hidden" name="auditUser" value="<s:property value="#session.sessionUser.name"/>">
-
+        <%--<input type="hidden" name="processInstanceId" value="<s:property value="issue.processInstanceId"/>">--%>
+        <%--<input type="hidden" name="auditDept" value="<s:iterator value="#session.sessionUser.groups"><s:property value="name"/></s:iterator>">--%>
+        <%--<input type="hidden" name="auditUser" value="<s:property value="#session.sessionUser.name"/>">--%>
+         <input type="hidden" name="issue.id" value="<s:property value="issue.id"/>"/>
         <input type="radio" name="result" value="1" checked/>同意
         <input type="radio" name="result" value="0"/>不同意
         <br/>

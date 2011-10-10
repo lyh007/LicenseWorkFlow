@@ -15,6 +15,7 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 import org.jbpm.api.Execution;
 import org.jbpm.api.ProcessInstance;
+import org.jbpm.api.TaskService;
 import org.jbpm.api.task.Task;
 import org.jbpm.pvm.internal.model.ExecutionImpl;
 import org.springframework.context.annotation.Scope;
@@ -46,6 +47,8 @@ public class VenditionAction extends BaseAction {
     private String taskId; //task 标识
     private Issue issue; //工单
     private String nowDateTime;  //当前时间字符串
+    private String result; //审核结果
+    private String auditNotion; //审批意见
     @Resource
     private IssueService issueService;
 
@@ -99,7 +102,26 @@ public class VenditionAction extends BaseAction {
 
     //审核
     public String audit() throws Exception {
-
+        TaskService taskService = issueService.getTaskService();
+        HttpSession session = request.getSession();
+        User sessionUser = (User) session.getAttribute(LicenseWorkFlowConstants.SESSION_USER);
+        String outcome = "";  //边
+        if ("1".equals(result)) {
+            outcome = "根据合同金额判断";
+        } else {
+            outcome = "否决";
+        }
+        /** all the variables visible in the given task */
+        Set<String> set = taskService.getVariableNames(taskId);
+        /** retrieves a map of variables */
+        Map<String, Object> variables = taskService.getVariables(taskId, set);
+        if (issue.getId() == 0) throw new OceanRuntimeException("标识不合法");
+        //执行任务
+        taskService.completeTask(taskId, outcome, variables);
+        //获取工单
+        issue = issueService.getById(issue.getId());
+        //修改工单的审核信息
+        //TODO:
         return "indexAction";
     }
 
@@ -133,5 +155,21 @@ public class VenditionAction extends BaseAction {
 
     public void setNowDateTime(String nowDateTime) {
         this.nowDateTime = nowDateTime;
+    }
+
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
+    }
+
+    public String getAuditNotion() {
+        return auditNotion;
+    }
+
+    public void setAuditNotion(String auditNotion) {
+        this.auditNotion = auditNotion;
     }
 }
