@@ -1,5 +1,7 @@
 package com.lyh.licenseworkflow.web.action.vendition;
 
+import com.lyh.licenseworkflow.po.Audit;
+import com.lyh.licenseworkflow.po.Group;
 import com.lyh.licenseworkflow.po.Issue;
 import com.lyh.licenseworkflow.po.User;
 import com.lyh.licenseworkflow.service.IssueService;
@@ -51,6 +53,8 @@ public class VenditionAction extends BaseAction {
     private String auditNotion; //审批意见
     @Resource
     private IssueService issueService;
+    @Resource
+    private UserService userService;
 
 
     @Override  //默认销售人员列表
@@ -105,22 +109,42 @@ public class VenditionAction extends BaseAction {
         TaskService taskService = issueService.getTaskService();
         HttpSession session = request.getSession();
         User sessionUser = (User) session.getAttribute(LicenseWorkFlowConstants.SESSION_USER);
+        User user = userService.getById(sessionUser.getId());
+        Audit audit = new Audit();  //审批意见
+        String groupName = "";
+        if (user.getGroups() != null && user.getGroups().size() > 0) {
+            List<Group> groupList = new ArrayList<Group>();
+            groupList.addAll(user.getGroups());
+            groupName = groupList.get(0).getCnName();
+        }
+        //设置审核的部门名称
+        audit.setAuditDept(groupName);
+        audit.setAuditNotion(auditNotion);  //审批意见
+        audit.setAuditTime(new Date()); //审批时间
+        audit.setAuditUser(user); //审批用户
         String outcome = "";  //边
+
         if ("1".equals(result)) {
             outcome = "根据合同金额判断";
+            audit.setAuditResult("同意");
         } else {
             outcome = "否决";
+            audit.setAuditResult("否决");
         }
         /** all the variables visible in the given task */
         Set<String> set = taskService.getVariableNames(taskId);
         /** retrieves a map of variables */
         Map<String, Object> variables = taskService.getVariables(taskId, set);
         if (issue.getId() == 0) throw new OceanRuntimeException("标识不合法");
-        //执行任务
-        taskService.completeTask(taskId, outcome, variables);
         //获取工单
         issue = issueService.getById(issue.getId());
+        variables.put("money", issue.getMoney());
+        //执行任务
+        taskService.completeTask(taskId, outcome, variables);
         //修改工单的审核信息
+        audit.setIssue(issue);
+        issue.getAudits().add(audit); //添加新的审核信息
+        issueService.update(issue); //更新到库中
         //TODO:
         return "indexAction";
     }
