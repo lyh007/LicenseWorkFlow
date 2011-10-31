@@ -55,4 +55,8 @@ public class IssueServiceImpl extends JBPMProcessTemplate implements IssueServic
     public List<Issue> getAllIssues() {
         return issueDao.getAllIssues();
     }
+
+    public void saveOrUpdate(Issue issue) {
+        issueDao.saveOrUpdate(issue);
+    }
 }

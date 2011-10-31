@@ -17,4 +17,10 @@ public interface IssueDao extends BaseInterface<Issue> {
      * @return 请求列表
      */
     public List<Issue> getAllIssues();
+     /**
+     * 更新或保存单个工单
+     *
+     * @param issue 实体
+     */
+    public void saveOrUpdate(Issue issue);
 }

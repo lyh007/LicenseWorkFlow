@@ -139,13 +139,16 @@ public class VenditionAction extends BaseAction {
         //获取工单
         issue = issueService.getById(issue.getId());
         variables.put("money", issue.getMoney());
+        variables.put("createUser","admin");
         //执行任务
         taskService.completeTask(taskId, outcome, variables);
         //修改工单的审核信息
         audit.setIssue(issue);
-        issue.getAudits().add(audit); //添加新的审核信息
-        issueService.update(issue); //更新到库中
-        //TODO:
+        Set<Audit> audits=issue.getAudits();
+        audits.add(audit);
+        issue.setAudits(audits);
+      //  issue.getAudits().add(audit); //添加新的审核信息
+        issueService.saveOrUpdate(issue); //更新到库中
         return "indexAction";
     }
 

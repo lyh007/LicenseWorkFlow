@@ -129,7 +129,16 @@ public abstract class EnhancedHibernateDaoSupport<T> {
             return;
         getHibernateTemplate().update(entity);
     }
-
+      /**
+     * 更新或保存单个实体
+     *
+     * @param entity 实体
+     */
+    public void saveOrUpdate(T entity){
+       if (entity == null)
+            return;
+        getHibernateTemplate().merge(entity);
+    }
     /**
      * 根据id删除实体
      *

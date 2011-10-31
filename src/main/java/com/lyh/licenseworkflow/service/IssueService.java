@@ -23,4 +23,11 @@ public interface IssueService extends BaseInterface<Issue>, JBPMService {
      * @return 请求列表
      */
     public List<Issue> getAllIssues();
+
+     /**
+     * 更新或保存单个工单
+     *
+     * @param issue 实体
+     */
+    public void saveOrUpdate(Issue issue);
 }
