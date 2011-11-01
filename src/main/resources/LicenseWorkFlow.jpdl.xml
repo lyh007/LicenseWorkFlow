@@ -61,7 +61,7 @@
 	</state>
 	<end g="261,585,48,48" name="end1">
 		<on event="start">
-			<event-listener class="org.demo.listener.LogListener">
+			<event-listener class="com.lyh.licenseworkflow.system.engine.flowlistener.LogListener">
 			</event-listener>
 		</on>
 	</end>
