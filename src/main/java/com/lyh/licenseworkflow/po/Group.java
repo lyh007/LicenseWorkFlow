@@ -66,8 +66,8 @@ public class Group implements Serializable {
         this.name = name;
     }
 
-    @ManyToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name = "parent_id", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "PARENT_ID")
     public Group getParentGroup() {
         return parentGroup;
     }
@@ -75,7 +75,8 @@ public class Group implements Serializable {
     public void setParentGroup(Group parentGroup) {
         this.parentGroup = parentGroup;
     }
-    @OneToMany(targetEntity =Group.class ,cascade=CascadeType.ALL,mappedBy ="subGroups")
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "parentGroup")
     public Set<Group> getSubGroups() {
         return subGroups;
     }
