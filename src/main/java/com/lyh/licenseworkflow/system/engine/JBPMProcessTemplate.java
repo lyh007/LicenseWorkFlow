@@ -106,6 +106,9 @@ public class JBPMProcessTemplate {
         }
         //获取流程实列
         ProcessInstance processInstance = getExecutionService().findProcessInstanceById(processInstanceId);
+        if(processInstance==null){
+            return null; //TODO:可能程序运行结最后一个结束结点时，获取不到流程实例了
+        }
         //获取流程定义标识
         String processDefinitionId = processInstance.getProcessDefinitionId();
         //获取流程定义实例
