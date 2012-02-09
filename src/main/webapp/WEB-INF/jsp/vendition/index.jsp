@@ -41,7 +41,7 @@
                     <td><s:date name="requestTime" format="yyyy-MM-dd HH:mm:ss"/></td>
                     <td><s:property value="requestUser.realName"/></td>
                     <td>
-                        <s:if test="workFlowNodeName!=null || workFlowNodeName!=''">
+                        <s:if test="workFlowNodeName!=null && workFlowNodeName!=''">
                             <s:property value="workFlowNodeName"/>
                         </s:if>
                         <s:else>结束</s:else>
