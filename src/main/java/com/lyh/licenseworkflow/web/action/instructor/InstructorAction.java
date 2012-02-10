@@ -103,7 +103,7 @@ public class InstructorAction extends BaseAction {
         if (requestTime != null && requestTime.length() > 0) {
             audit.setAuditTime(sdf.parse(requestTime));
         }
-        audit.setAuditUser(vUser);
+        audit.setAuditUser(user);
         audit.setIssue(issue);
         Set<Audit> audits = new HashSet<Audit>();
         audits.add(audit);
