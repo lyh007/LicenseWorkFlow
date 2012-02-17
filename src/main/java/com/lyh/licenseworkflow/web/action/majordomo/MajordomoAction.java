@@ -148,7 +148,19 @@ public class MajordomoAction extends BaseAction {
         /** retrieves a map of variables */
         Map<String, Object> variables = taskService.getVariables(taskId, set);
         if (issue.getId() == 0) throw new OceanRuntimeException("标识不合法");
+        //获取工单
+        issue = issueService.getById(issue.getId());
 
+        variables.put("createUser", "admin");
+
+        //执行任务
+        taskService.completeTask(taskId, outcome, variables);
+        //修改工单的审核信息
+        audit.setIssue(issue);
+        Set<Audit> audits = issue.getAudits();
+        audits.add(audit);
+        issue.setAudits(audits);
+        issueService.saveOrUpdate(issue); //更新到库中
         return "indexAction";
     }
 
