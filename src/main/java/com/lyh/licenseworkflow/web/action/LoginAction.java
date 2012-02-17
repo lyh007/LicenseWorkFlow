@@ -34,8 +34,8 @@ import java.util.List;
         @Result(name = "login", location = "/WEB-INF/jsp/login.jsp"),
         @Result(name = "instructor", location = "/instructor/instructor.action", type = "redirect"),
         @Result(name = "vendition", location = "/vendition/vendition.action", type = "redirect"),
-        @Result(name = "majordomo", location = "majordomo/majordomo.action",type="redirect"),
-        @Result(name = "admin", location = "/WEB-INF/jsp/admin/index.jsp"),
+        @Result(name = "majordomo", location = "/majordomo/majordomo.action",type="redirect"),
+        @Result(name = "admin", location = "/admin/admin.action",type="redirect"),
         @Result(name = "boss", location = "/WEB-INF/jsp/boss/index.jsp")
 })
 public class LoginAction extends BaseAction {
