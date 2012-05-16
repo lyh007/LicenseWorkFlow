@@ -150,9 +150,15 @@ public class JBPMProcessTemplate {
         String activeName = "";
         ProcessInstance processInstance = getExecutionService().findProcessInstanceById(processInstanceId);
         if (processInstance != null) {
-            Iterator it = processInstance.findActiveActivityNames().iterator();
-            for (; it.hasNext(); ) {
-                activeName += it.next();
+            Object[] objects=processInstance.findActiveActivityNames().toArray();
+            if(objects!=null && objects.length>0){
+                for(int i=0;i<objects.length;i++) {
+                    if(i!=(objects.length-1)){
+                        activeName +=objects[i].toString()+ ";";
+                    }else{
+                          activeName +=objects[i].toString();
+                    }
+                }
             }
         }
         return activeName;

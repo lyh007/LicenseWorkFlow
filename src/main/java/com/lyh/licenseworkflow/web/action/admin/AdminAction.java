@@ -1,6 +1,7 @@
 package com.lyh.licenseworkflow.web.action.admin;
 
 import com.lyh.licenseworkflow.po.Audit;
+import com.lyh.licenseworkflow.po.Group;
 import com.lyh.licenseworkflow.po.Issue;
 import com.lyh.licenseworkflow.po.User;
 import com.lyh.licenseworkflow.service.IssueService;
@@ -26,9 +27,7 @@ import org.springframework.stereotype.Controller;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -44,7 +43,8 @@ import java.util.List;
 @Results({
         @Result(name = "index", location = "/WEB-INF/jsp/admin/index.jsp"),
         @Result(name = "indexAction", location = "/admin/admin.action", type = "redirect"),
-        @Result(name = "audit", location = "/WEB-INF/jsp/admin/audit.jsp")
+        @Result(name = "audit", location = "/WEB-INF/jsp/admin/audit.jsp"),
+        @Result(name = "view", location = "/WEB-INF/jsp/admin/view.jsp")
 })
 public class AdminAction extends BaseAction {
     @Resource
@@ -55,6 +55,7 @@ public class AdminAction extends BaseAction {
     private List<IssueVO> issues = new ArrayList<IssueVO>(); //工单列表
     private Issue issue; //工单
     private String nowDateTime;  //当前时间字符串
+    private String taskId; //任务标识
 
     @Override  //默认License管理员的工单列表
     public String execute() throws Exception {
@@ -116,14 +117,51 @@ public class AdminAction extends BaseAction {
 
     //审核
     public String audit() throws Exception {
+
         TaskService taskService = issueService.getTaskService();
         HttpSession session = request.getSession();
         User sessionUser = (User) session.getAttribute(LicenseWorkFlowConstants.SESSION_USER);
         User user = userService.getById(sessionUser.getId());
+        Set<String> set = taskService.getVariableNames(taskId);
+        Map<String, Object> variables = taskService.getVariables(taskId, set);
+
+        String groupName = "";
+        if (user.getGroups() != null && user.getGroups().size() > 0) {
+            List<Group> groupList = new ArrayList<Group>();
+            groupList.addAll(user.getGroups());
+            groupName = groupList.get(0).getCnName();
+        }
         Audit audit = new Audit();  //审批意见
+        audit.setAuditDept(groupName);
+        audit.setAuditUser(user);
+        audit.setAuditNotion("生成License");
+        audit.setAuditTime(new Date());
+        if (issue.getId() == 0) throw new OceanRuntimeException("标识不合法");
+        issue = issueService.getById(issue.getId());
+        String resultStr="";
+        if(issue.getLicenseType()==1){
+            resultStr="永久License";
+        }else{
+            resultStr="临时License";
+        }
+        audit.setAuditResult("已生成");
+        //修改工单的审核信息
+        audit.setIssue(issue);
+        Set<Audit> audits = issue.getAudits();
+        audits.add(audit);
+        issue.setAudits(audits);
+        issueService.saveOrUpdate(issue); //更新到库中
+        variables.put("licenseType", issue.getLicenseType());
+        taskService.completeTask(taskId, "根据License类型判断", variables);
         return "indexAction";
     }
 
+    //查看申请
+    public String view() throws Exception {
+        if (issue.getId() == 0) throw new OceanRuntimeException("标识不合法");
+        issue = issueService.getById(issue.getId());
+        return "view";
+    }
     public List<IssueVO> getIssues() {
         return issues;
     }
@@ -146,5 +184,13 @@ public class AdminAction extends BaseAction {
 
     public void setNowDateTime(String nowDateTime) {
         this.nowDateTime = nowDateTime;
+    }
+
+    public String getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
     }
 }

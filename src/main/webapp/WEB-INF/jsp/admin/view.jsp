@@ -3,7 +3,7 @@
 <html>
 <head>
     <base href="<%=basePath%>">
-    <title>License管理员-主页</title>
+    <title>技术支持-查看工单</title>
 </head>
 <body>
 <%@include file="../common/header.jsp" %>
@@ -20,7 +20,7 @@
         </tr>
         <tr>
             <td align="left">注册License类型：</td>
-            <td align="left"><s:if test="issue.licenseType==0">
+            <td align="left"><s:if test="licenseType==0">
                 临时
             </s:if>
                 <s:else>
@@ -68,22 +68,12 @@
     </table>
 </fieldset>
 <br>
-
 <fieldset>
-    <legend>生成License</legend>
-    <form action="admin/admin!audit.action" method="post">
-        <input type="hidden" name="taskId" value="<s:property value="taskId"/>">
-        <input type="hidden" name="issue.id" value="<s:property value="issue.id"/>"/>
-        <input type="hidden" name="auditDept" value="<s:iterator value="#session.sessionUser.groups"><s:property value="cnName"/></s:iterator>">
-        <input type="hidden" name="licenseType" value="<s:property value="licenseType"/>">
-        <br>
-        生成License类型：<s:if test="issue.licenseType==0">临时</s:if><s:else>永久</s:else><br>
-        创建单位：<s:iterator value="#session.sessionUser.groups"><s:property value="cnName"/></s:iterator><br>
-        创建时间：<s:property value="nowDateTime"/><br>
-        创建人：<s:property value="#session.sessionUser.realName"/>
-        <br>
-        <input type="submit" value="生成" />
-    </form>
+    <legend>项目审批流程图</legend>
+    <div>
+       <iframe name="myframe" src="flowchart.action?processInstanceId=<s:property value="issue.processInstanceId"/>"
+		frameborder="0" scrolling="auto" width="1028" height="700" ></iframe>
+    </div>
 </fieldset>
 <table name="table" border="0" width="100%">
     <tr>

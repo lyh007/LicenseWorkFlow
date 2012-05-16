@@ -51,7 +51,7 @@
                     <a href="admin/admin!preAudit.action?issue.id=<s:property value="id"/>&taskId=<s:property value="issueTask.id"/>">生成License</a>
                 </s:if>
                 <s:else>
-                    <a href="instructor/instructor!view.action?issue.id=<s:property value="id"/>">查看</a>
+                    <a href="admin/admin!view.action?issue.id=<s:property value="id"/>">查看</a>
                 </s:else>
             </td>
             </s:iterator>

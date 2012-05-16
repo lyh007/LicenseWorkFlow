@@ -23,7 +23,7 @@
 		<transition g="0,-16" name="同意" to="生成License" />
 	</task>
 	<decision g="64,378,48,48" name="exclusive2">
-		<handler class="org.demo.handler.JbpmDecisionHandler" />
+		<handler class="com.lyh.licenseworkflow.system.engine.handler.JbpmDecisionHandler" />
 		<transition g="-47,-17" name="临时License" to="end1" />
 		<transition g="-62,-17" name="永久License需要再次确认" to="fork1" />
 	</decision>
@@ -33,7 +33,7 @@
 	</fork>
 	<task candidate-groups="majordomo" g="394,334,124,52" name="销售总监再次确认">
 		<on event="start">
-			<event-listener class="org.demo.listener.RollbackListener">
+			<event-listener class="com.lyh.licenseworkflow.system.engine.flowlistener.RollbackListener">
 				<field name="m_rollbackTo">
 					<string value="end1" />
 				</field>
@@ -43,7 +43,7 @@
 	</task>
 	<task assignee="boss" g="410,423,92,52" name="老板确认">
 		<on event="start">
-			<event-listener class="org.demo.listener.RollbackListener">
+			<event-listener class="com.lyh.licenseworkflow.system.engine.flowlistener.RollbackListener">
 				<field name="m_rollbackTo">
 					<string value="end1" />
 				</field>
