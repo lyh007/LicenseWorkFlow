@@ -36,7 +36,7 @@ import java.util.List;
         @Result(name = "vendition", location = "/vendition/vendition.action", type = "redirect"),
         @Result(name = "majordomo", location = "/majordomo/majordomo.action",type="redirect"),
         @Result(name = "admin", location = "/admin/admin.action",type="redirect"),
-        @Result(name = "boss", location = "/WEB-INF/jsp/boss/index.jsp")
+        @Result(name = "boss", location = "/boss/boss.action",type="redirect")
 })
 public class LoginAction extends BaseAction {
     private String name;

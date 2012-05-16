@@ -6,7 +6,7 @@
     <title>技术支持-主页</title>
 </head>
 <body>
-<<%@include file="../common/header.jsp" %>
+<%@include file="../common/header.jsp" %>
 <fieldset>
     <legend>申请信息</legend>
     <table border="1" width="100%">

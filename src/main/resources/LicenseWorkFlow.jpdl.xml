@@ -39,7 +39,7 @@
 				</field>
 			</event-listener>
 		</on>
-		<transition to="join1" />
+		<transition to="join1" name="同意"/>
 	</task>
 	<task assignee="boss" g="410,423,92,52" name="老板确认">
 		<on event="start">
@@ -49,7 +49,7 @@
 				</field>
 			</event-listener>
 		</on>
-		<transition to="join1" />
+		<transition to="join1" name="同意" />
 	</task>
 	<join g="586,387,48,48" multiplicity="2" name="join1">
 		<transition to="申请成功，5分钟后自动关闭" />
